@@ -91,8 +91,12 @@
     <script>
         var mario = {
             x: 0,
-            y: 0
+            y: 0,
+            vy: 0
         };
+
+        var gravity = 5; // Adjust the gravity strength as needed
+        var jumpStrength = 10; // Adjust the jump strength as needed
 
         document.onkeydown = function (e) {
             var marioElement = document.querySelector('.mario');
@@ -101,14 +105,35 @@
                 mario.x--;
             } else if (e.keyCode == 39) {
                 mario.x++;
-            } else if (e.keyCode == 38) {
-                mario.y++;
-            } else if (e.keyCode == 40) {
-                mario.y--;
+            } else if (e.keyCode == 38 && mario.y == 0) {
+                mario.vy = jumpStrength
+            }
+            mario.vy -= gravity;
+            mario.y += mario.vy;
+              // Keep Mario above the ground
+            if (mario.y < 0) {
+                mario.y = 0;
+                mario.vy = 0;
             }
             marioElement.style.left = mario.x * 5 + '%';
             marioElement.style.bottom = mario.y * 50 + 'px';
         };
+          // Apply gravity continuously
+        setInterval(function () {
+            var marioElement = document.querySelector('.mario');
+
+            // Apply gravity
+            mario.vy -= gravity;
+            mario.y += mario.vy;
+
+            // Keep Mario above the ground
+            if (mario.y < 0) {
+                mario.y = 0;
+                mario.vy = 0;
+            }
+            marioElement.style.left = mario.x * 5 + '%';
+            marioElement.style.bottom = mario.y * 50 + 'px';
+        }, 150);
     </script>
 </body>
 </html>
