@@ -15,43 +15,43 @@
             background-repeat: repeat;
             background-size: cover;
         }
-
         div.bottom {
             position: absolute;
             bottom: 0;
             right: 0;
             left: 0;
         }
-
         div.row div {
             display: flex;
         }
-
         div.brick {
             width: 5%;
             height: 50px;
             background-color: brown;
             border: 1px solid black;
         }
-
         div.mario {
             display: inline-block;
             position: relative;
         }
-
         .mario-img {
-            height: 65px;
+            height: 70px;
         }
-
         div.coin {
             position: absolute;
             top: 500px;
             left: 500px;
-
         }
-
         .coin-img {
             height: 50px;
+        }
+        div.pipe{
+            position: absolute;
+            bottom: 90px;
+            left: 500px;
+        }
+        .pipe-img {
+            height: 150px;
         }
     </style>
 </head>
@@ -62,6 +62,9 @@
             <img src="coin.gif" class="coin-img" alt="coin">
             <img src="coin.gif" class="coin-img" alt="coin">
             <img src="coin.gif" class="coin-img" alt="coin">
+        </div>
+        <div class="pipe">
+            <img src="pipe.gif" class="pipe-img" alt="pipe-img">
         </div>
         <div class="bottom">
             <div class="mario">
@@ -126,13 +129,13 @@
             function checkCollision(element1, element2) {
                 var rect1 = element1.getBoundingClientRect();
                 var rect2 = element2.getBoundingClientRect();
-            return (
-                rect1.left < rect2.right &&
-                rect1.right > rect2.left &&
-                rect1.top < rect2.bottom &&
-                rect1.bottom > rect2.top
-        );
-    }
+                return (
+                    rect1.left < rect2.right &&
+                    rect1.right > rect2.left &&
+                    rect1.top < rect2.bottom &&
+                    rect1.bottom > rect2.top
+                );
+            }
 
             document.onkeydown = function (e) {
                 var marioElement = document.querySelector('.mario');
@@ -154,14 +157,14 @@
                 marioElement.style.left = mario.x * 5 + '%';
                 marioElement.style.bottom = mario.y * 50 + 'px';
 
-                  // Check for coin collision
+                // Check for coin collision
                 for (var i = 0; i < coins.length; i++) {
                     var coin = coins[i];
                     if (coin.style.display !== 'none' && checkCollision(marioElement, coin)) {
-                // Remove the coin when touched
+                        // Remove the coin when touched
                         coin.style.display = 'none';
-            }
-        }
+                    }
+                }
             };
             // Apply gravity continuously
             setInterval(function () {
